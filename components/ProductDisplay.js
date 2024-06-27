@@ -28,6 +28,8 @@ const productDisplay={
         Sizes: <span v-for="size in sizes">{{size}} &nbsp;</span>
 
         <button class="button" @click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}">Add To Cart</button>
+        
+        <button class="button" @click="removeFromCart">Remove from Cart</button>
 
 
 
@@ -37,7 +39,7 @@ const productDisplay={
     props:{
         premium: Boolean
     },
-    setup(props){
+    setup(props,{emit}){
         const shipping=computed(()=>{
             if(props.premium){
                 return 'Free'
@@ -81,9 +83,12 @@ const productDisplay={
             return variants.value[selectedVariant.value].quantity
         })
         function addToCart(){
-            cart.value+=1;
+            emit('add-to-cart',variants.value[selectedVariant.value].id)
         }
 
+        function removeFromCart(){
+            emit('remove-from-cart',variants.value[selectedVariant.value].id)
+        }
         const title=computed(()=>{
             return brand.value + ' '+product.value
         })
@@ -121,7 +126,8 @@ const productDisplay={
             addToCart,
             updateImage,
             updateVariant,
-            shipping
+            shipping,
+            removeFromCart
            
         }
     }
