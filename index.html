@@ -24,7 +24,13 @@
            
         </div>
         <div class="product-info">
+            <p v-if="onSale">OnSale</p>
+            <p v-else>Not On Sale</p>
             <h1><a :href="url">{{product}}</a></h1>
+            <!-- <p v-if="inStock">In Stock</p> -->
+             <p v-if="inventory>10">In Stock</p>
+             <p v-else-if="inventory<=10 && inventory >0">Almost out of Stock</p>
+            <p v-else>Out Of Stock</p>
         </div>
     </div>
 
