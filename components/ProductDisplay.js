@@ -26,14 +26,14 @@ const productDisplay={
         </div>
 
         Sizes: <span v-for="size in sizes">{{size}} &nbsp;</span>
+        <br />
 
         <button class="button" @click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}">Add To Cart</button>
         
-        <button class="button" @click="removeFromCart">Remove from Cart</button>
-
-
-
+        <button  @click="removeFromCart">Remove Product</button>
     </div>
+    <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
 </div>
 `,
     props:{
@@ -106,7 +106,11 @@ const productDisplay={
             image.value=variantImage;
         }
 
-        
+        const reviews=ref([]);
+
+        function addReview(review){
+            reviews.value.push(review);
+        }
 
         return{
             product,
@@ -127,7 +131,9 @@ const productDisplay={
             updateImage,
             updateVariant,
             shipping,
-            removeFromCart
+            removeFromCart,
+            reviews,
+            addReview
            
         }
     }
